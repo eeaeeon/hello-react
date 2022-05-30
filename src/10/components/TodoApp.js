@@ -2,17 +2,24 @@ import React, { useState, useRef } from "react";
 import TodoList from "./TodoList";
 import TodoAppStyle from "../css/TodoAppStyle";
 
-// 할 일 목록 메인 컴포넌트
+/* ******************* */
+/* 액션 기능을 가진 컴포넌트 */
+/* 할 일 목록 메인 컴포넌트 */
+/* ******************* */
+
 function TodoApp() {
   const [data, setData] = useState(""); // 입력 값
   const [list, setList] = useState([]); // 추가한 할 일 목록
 
+  // 임시 변수로 아이디 설정
   const nextId = useRef(0);
 
+  // input 값 저장
   const handleChange = (e) => {
     setData(e.target.value);
   };
 
+  // 추가 버튼 클릭 시 입력한 데이터를 배열에 저장
   const handleClick = () => {
     if (data.length === 0) return;
 
@@ -22,11 +29,13 @@ function TodoApp() {
       checked: false,
       style: {},
     };
+
     setList((list) => [...list, listData]);
     setData("");
     nextId.current += 1;
   };
 
+  // 체크박스가 클릭된 배열 데이터를 찾아 스타일 변경하고 배열에 다시 저장
   const onCheckBoxClick = (e) => {
     const newList = [...list];
     newList[e.target.id].checked = e.target.checked;
@@ -42,6 +51,7 @@ function TodoApp() {
     setList(newList);
   };
 
+  // 삭제 버튼 클릭 시 배열 목록에서 선택한 데이터 제거
   const onRemove = (id) => {
     const newList = [...list.filter((item) => item.id !== id)];
 
